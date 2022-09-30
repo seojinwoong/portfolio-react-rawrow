@@ -1,0 +1,20 @@
+.footer-wrapper { border-top: 2px solid #111; width: calc(100% - 20px); margin: 0 auto; padding: 10px 0 30px; } 
+.footer-wrapper .menu-lists { float: left; width: 20%; } 
+.footer-wrapper .menu-lists li a { font-weight: bold; font-size: 15px; } 
+.footer-wrapper .customer-center-info { float: left; width: 20%; font-size: 14px; } 
+.footer-wrapper .customer-center-info .title { font-weight: bold; } 
+.footer-wrapper .customer-center-info .bottom-text { font-weight: bold; } 
+.footer-wrapper .company-info { float: left; width: 40%; font-size: 14px; } 
+.footer-wrapper .copyright-and-sns { float: left; width: 20%; font-size: 14px; font-weight: bold; } 
+.footer-wrapper .copyright-and-sns .sns-section img { width: 30px; display: inline-block; cursor: pointer; margin-right: 5px; } 
+.footer-wrapper .go-top-btn { transition:all .3s; position: fixed; bottom: 30px; right: 30px; border: 2px solid #111; line-height: 1; width: 36px; height: 36px; text-align: center; line-height: 30px; cursor: pointer; font-size: 20px; } 
+.footer-wrapper .go-top-btn:hover { background:#111; color:#fff; } 
+
+@media (max-width:1100px){
+  #footerWrapper .sections { width: 45%; float: none; display: inline-block; margin-bottom: 20px; vertical-align: top; } 
+  #footerWrapper .sections:nth-child(odd) {margin-right:2.5%;}
+  #footerWrapper .sections:nth-child(even) {margin-left:2.5%;}
+}
+@media (max-width:700px){
+  #footerWrapper .sections {width:100%; margin:0 0 20px 0 !important; text-align: center;}
+}
