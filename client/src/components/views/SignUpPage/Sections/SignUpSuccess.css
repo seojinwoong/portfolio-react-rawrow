@@ -1,0 +1,19 @@
+.register-success {padding-top:50px;}
+.welcome { text-align: center; font-size: 2.6rem; font-weight: bold; } 
+.welcome span { background: #111; color: #fff; padding: 0 5px; } 
+.btn-wrapper { text-align: center; margin-top: 50px; } 
+.btn-wrapper a { cursor: pointer; color: #fff; margin: 50px auto; display: inline-block; padding: 10px 40px; font-size: 20px; text-decoration: none; font-weight: bold; margin: 0 5px; } 
+.btn-wrapper a.go-main { background:#000; } 
+.btn-wrapper a.go-login { background:#ff5000 } 
+
+/* 미디어쿼리 */
+@media (max-width: 700px) {
+    .welcome {font-size:14px}
+    .btn-wrapper a {font-size:18px; padding: 6px 30px; } 
+} 
+ 
+ 
+ 
+ 
+ 
+ 

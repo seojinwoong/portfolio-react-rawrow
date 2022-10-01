@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback, memo } from "react";
 import "./Sections/Header.css";
 import EventTopRolling from "./Sections/EventTopRolling";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-// import { logoutUser } from '../../../_actions/user_actions';
+import { logoutUser } from '../../../_actions/user_actions';
 import { Link } from "react-router-dom";
 
 import LogoImg from '../../../images/logo.png';
@@ -13,7 +13,6 @@ import { faShoppingBag, faSearch, faUser, faShoppingCart, faBars, faTimes, faUse
 const Header = memo((props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const user = useSelector(state => state.user);
 
   const [SearchValue, setSearchValue] = useState('');
@@ -22,17 +21,17 @@ const Header = memo((props) => {
   const logoRef = useRef(null);
 
   useEffect(() => {
-    if(location.pathname === "/") logoRef.current.classList.add('mainpage');
+    logoRef.current.classList.add('mainpage');
   }, []);
 
   const logoutHandler = () => {
-    // dispatch(logoutUser()).then(response => {
-    //   if (response.payload.success) {
-    //     window.location.replace("/");
-    //   } else {
-    //     alert('로그아웃이 실패하였습니다.');
-    //   }
-    // })
+    dispatch(logoutUser()).then(response => {
+      if (response.payload.success) {
+        window.location.replace('/');
+      } else {
+        alert('로그아웃이 실패하였습니다.');
+      }
+    })
   };
 
   const checkSearchValue = () => {
@@ -75,50 +74,60 @@ const Header = memo((props) => {
         </nav>
 
           <section className="right-menu">
-            {
-              user.userData && user.userData.isAdmin 
-              && (
-                  <Link className='menu-list' to="/product/upload">
-                    <i>상품업로드</i>
-                    <FontAwesomeIcon icon={faShoppingBag} className="mo-ico"/>
-                  </Link>
-              )
-            }
-            {
-              user.userData && user.userData.isAuth
-              ? ( 
-                <>
-                  <Link className='menu-list' to="/user/cart">
-                    <i>CART</i>
-                    <FontAwesomeIcon icon={faShoppingCart} className="mo-ico"/>
-                  </Link>
-                  <span className='menu-list' onClick={logoutHandler}>
-                    <i>LOGOUT</i>
-                    <FontAwesomeIcon icon={faSignOutAlt} className="mo-ico"/>
-                  </span>
-                </>
+            <div>
+              {
+                user.userData && user.userData.isAdmin 
+                && (
+                    <Link className='menu-list' to="/product/upload">
+                      <i>상품업로드</i>
+                      <FontAwesomeIcon icon={faShoppingBag} className="mo-ico"/>
+                    </Link>
                 )
-              : (
-                <>
-                  <Link className='menu-list' to="/login">
-                    <i>LOGIN</i>
-                    <FontAwesomeIcon icon={faUser} className="mo-ico"/>
-                  </Link>
-                  <Link className='menu-list' to="/register">
-                    <i>SIGNUP</i>
-                    <FontAwesomeIcon icon={faUserPlus} className="mo-ico"/>
-                  </Link>
-                </>
-                )
-            }
+              }
+              {
+                user.userData && user.userData.isAuth
+                ? ( 
+                  <>
+                    <Link className='menu-list' to="/user/cart">
+                      <i>
+                        CART&nbsp;
+                        {user.userData.cart && user.userData.cart.length > 0 && `(${user.userData.cart.length})` }  
+                      </i>
+                      <FontAwesomeIcon icon={faShoppingCart} className="mo-ico"/>
+                      {user.userData.cart && user.userData.cart.length > 0 && <span className="cart-count">{user.userData.cart.length}</span> } 
+                    </Link>
+                    <span className='menu-list' onClick={logoutHandler}>
+                      <i>LOGOUT</i>
+                      <FontAwesomeIcon icon={faSignOutAlt} className="mo-ico"/>
+                    </span>
+                  </>
+                  )
+                : (
+                  <>
+                    <Link className='menu-list' to="/login">
+                      <i>LOGIN</i>
+                      <FontAwesomeIcon icon={faUser} className="mo-ico"/>
+                    </Link>
+                    <Link className='menu-list' to="/signUp">
+                      <i>SIGNUP</i>
+                      <FontAwesomeIcon icon={faUserPlus} className="mo-ico"/>
+                    </Link>
+                  </>
+                  )
+              }
 
-            <span className='menu-list' onClick={toggleSearchTerm}>
-              <i>SEARCH</i>
-              <FontAwesomeIcon icon={faSearch} className="mo-ico"/>
-            </span>
-            <span className='menu-list mo-hamburger'>
-                <FontAwesomeIcon icon={IsMobileMenuShow ? faTimes : faBars} className="mo-ico" onClick={toggleMobileNav}/>
-            </span>
+              <span className='menu-list' onClick={toggleSearchTerm}>
+                <i>SEARCH</i>
+                <FontAwesomeIcon icon={faSearch} className="mo-ico"/>
+              </span>
+              <span className='menu-list mo-hamburger'>
+                  <FontAwesomeIcon icon={IsMobileMenuShow ? faTimes : faBars} className="mo-ico" onClick={toggleMobileNav}/>
+              </span>
+            </div>
+            {
+                user.userData && user.userData.isAuth 
+                && <span className='welcome-user-txt'><i>{user.userData.name}</i>님 반갑습니다.</span>
+            }
           </section>
       </div>
       {/* // nav-bar */}

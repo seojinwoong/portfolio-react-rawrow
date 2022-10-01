@@ -1,0 +1,15 @@
+.not-found-page { text-align: center; margin: 20px 0; } 
+.not-found-page .info-txt .eng-txt { display: block; font-size: 20px; } 
+.not-found-page .info-txt .number { display: block; font-weight: bold; font-size: 270px; line-height: 1; margin-top: -25px; letter-spacing: -24px; margin-left: -38px; } 
+.not-found-page .info-txt .txt { display: block; font-size: 20px; font-weight: bold; } 
+.not-found-page .info-txt + a { background: #ff5000; margin-top: 50px; width: 200px; height: 50px; font-size: 18px; cursor: pointer; display: flex; margin: 50px auto 0; align-items: center; justify-content: center; color: #fff; text-decoration: none; } 
+
+@media (max-width: 1024px){
+    .not-found-page .info-txt .eng-txt, .not-found-page .info-txt .txt  { font-size: 16px; } 
+    .not-found-page .info-txt .number { font-size: 200px; } 
+    .not-found-page .info-txt+a { margin-top: 30px; width: 150px; height: 40px; font-size: 16px; margin: 30px auto 0; } 
+ }
+@media (max-width: 500px){
+    .not-found-page .info-txt .eng-txt, .not-found-page .info-txt .txt  { font-size: 14px; } 
+    .not-found-page .info-txt .number { font-size: 160px; } 
+}

@@ -24,7 +24,7 @@
  *::after { box-sizing: border-box; } 
  
  html { overflow-y:scroll; font-size:62.5%; } 
- body { position: relative; } 
+ body { position: relative; scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;} 
  
  /* 여백 초기화 */
  body,div,ul,li,dl,dd,dt,ol,h1,h2,h3,h4,h5,h6,input,fieldset,legend,p,select,table,th,td,tr,textarea,button,form,figure,figcaption { margin:0; padding:0; border:0; outline: 0; } 
@@ -82,6 +82,10 @@
  .tooltip-wrapper:hover .tooltiptext { visibility: visible; transform: translateY(0); opacity:1; } 
  .tooltiptext::after { content: " "; position: absolute; border-style: solid; border-width: 5px; bottom:100%; left:50%; margin-left:-5px; border-color: transparent transparent black transparent; } 
  
+.all-page { display: flex; flex-direction: column; min-height: 100vh;} 
+/* .all-page { opacity:0; transition:all .4s; } 
+.all-page.active { transition-delay: .3s; opacity:1; } */
+
  /* position-top */
  .t10 { top:10px !important; } 
  .t20 { top:20px !important; } 
@@ -133,21 +137,23 @@
  
  .page-title { text-align: center; font-size: 4.5rem; font-weight: bold; margin:5rem 0; } 
  
- .page-content { margin-top:146px; margin-bottom: 50px; height:auto; } 
+ .page-content { margin-top:146px; margin-bottom: 50px; height:auto; flex: 1 auto;} 
  
  /* 미디어쿼리 */
  @media (max-width: 1024px) { /* 모바일 레이아웃으로 변경지점 */
- html { font-size: 50%; } 
- .container { width:100%; padding:0 10px; } 
- .page-content { margin-top:128px; } 
+    html { font-size: 50%; } 
+    .container { width:100%; padding:0 10px; } 
+    .page-content { margin-top:128px; } 
  } 
- @media (max-width: 800px) { html { font-size: 40%; } 
- .page-content { margin-top:114px; } 
- select, input, textarea, input::placeholder, textarea::placeholder { font-size: 16px; } 
+ @media (max-width: 800px) { 
+    html { font-size: 40%; } 
+    .page-content { margin-top:114px; } 
+    select, input, textarea, input::placeholder, textarea::placeholder { font-size: 16px; } 
  } 
- @media (max-width: 700px) { html { font-size: 30%; } 
- .page-content { margin-top:102px; } 
- select, input, textarea, input::placeholder, textarea::placeholder { font-size: 15px; } 
+ @media (max-width: 700px) { 
+    html { font-size: 30%; } 
+    .page-content { margin-top:102px; } 
+    select, input, textarea, input::placeholder, textarea::placeholder { font-size: 15px; } 
  } 
  
  

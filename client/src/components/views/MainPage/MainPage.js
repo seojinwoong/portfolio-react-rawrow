@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, memo } from 'react'
 import './Sections/MainPage.css';
 import introImg1 from '../../../images/intro_page_01.jpg';
 import introImg2 from '../../../images/intro_page_02.jpg';
@@ -7,15 +7,14 @@ import introImg4 from '../../../images/intro_page_04.jpg';
 import introImg5 from '../../../images/intro_page_05.jpg';
 import { Link } from 'react-router-dom';
 
-function MainPage() {
+const MainPage = memo(() => {
     const bannerRef = useRef();
-    const listener = () => {
+    const scrollFn = () => {
+        let scrollTop = window.pageYOffset || document.documentElement.scrollTop || window.scrollY;
         let lists = bannerRef.current.querySelectorAll('li');
-        lists.forEach(function(el,idx){
-            if ( window.scrollY >= el.getBoundingClientRect().top - document.documentElement.clientHeight * 0.75) {
+        lists.forEach(el => {
+            if (scrollTop > el.offsetTop - window.innerHeight / 2) {
                 el.classList.add('active');
-            } else {
-                el.classList.remove('active');
             }
         });
     }
@@ -27,9 +26,9 @@ function MainPage() {
     }, []);
 
     useEffect(() => {
-        window.addEventListener('scroll', listener);
+        window.addEventListener('scroll', scrollFn);
         return () => {
-            window.removeEventListener('scroll', listener);
+            window.removeEventListener('scroll', scrollFn);
         }
     }, []);
 
@@ -99,6 +98,6 @@ function MainPage() {
             </ul>
         </div>
     )
-}
+});
 
 export default MainPage

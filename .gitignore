@@ -1,6 +1,7 @@
 dev.js
 node_modules
 /build
+uploads
 
 # dependencies
 /.pnp
