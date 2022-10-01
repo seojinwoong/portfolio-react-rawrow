@@ -1,12 +1,23 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { getCartItems, removeCartItem } from '../../../_actions/user_actions';
+import { getCartItems, removeCartItem, removeAllCart } from '../../../_actions/user_actions';
+import { comma, uncomma } from '../../utils/utils';
 import CartList from './Sections/CartList';
 import './Sections/CartPage.css';
 
 const CartPage = ({user}) => {
   const dispatch = useDispatch();
   const [CartDetail, setCartDetail] = useState([]);
+  const [Total, setTotal] = useState(0);
+
+  const calculateMoney = (data) => {
+    let total = 0;
+    for (let cart of data) {
+      let totalAmount = cart.quantity.reduce((a,b) => a + b.amount, 0);
+      total += totalAmount * Number(uncomma(cart.price));
+    }
+    setTotal(total);
+  }
 
   useEffect(() => {
     let cartItems = [];
@@ -16,11 +27,13 @@ const CartPage = ({user}) => {
         user.userData.cart.forEach(item => {
           cartItems.push(item.id);
         });
+        dispatch(getCartItems(cartItems, user.userData.cart))
+        .then(response => {
+          setCartDetail(response.payload);
+          calculateMoney(response.payload);
+        });
       }
-      dispatch(getCartItems(cartItems, user.userData.cart))
-        .then(response => setCartDetail(response.payload));
     }
-
   }, [user.userData]);
 
   const removeCartFn = useCallback((productId) => {
@@ -30,6 +43,17 @@ const CartPage = ({user}) => {
       });
   }, []);
 
+  const removeAllCartFn = () => {
+    let isConfirmRemmove = window.confirm('장바구니에 있는 모든 상품을 삭제하시겠습니까?');
+    if (isConfirmRemmove) {
+      dispatch(removeAllCart())
+        .then(response => {
+          if (response.payload.success) window.location.reload();
+          else alert('장바구니 상품을 전체삭제하는 과정에서 오류가 발생했습니다.');
+        })
+    }
+  }
+
   return (
     <div id="cartPage">
       <div className="container">
@@ -37,7 +61,7 @@ const CartPage = ({user}) => {
 
         <CartList cartData={CartDetail} removeCart={removeCartFn}/>
 
-        <button className='remove-all'>장바구니 상품 전체삭제</button>
+        <button className={CartDetail.length === 0 ? 'remove-all disabled' : 'remove-all'} onClick={removeAllCartFn}>장바구니 상품 전체삭제</button>
 
         <div className='calculate-all'>
             <p className='tit-box'>
@@ -46,9 +70,9 @@ const CartPage = ({user}) => {
               <span className='tit'>TOTAL</span>
             </p>
             <p className='con-box'>
-              <span className='con'>554,000원</span>
+              <span className='con'>{comma(Total)}원</span>
               <span className='con'>+ 0원</span>
-              <span className='con'>554,000원</span>
+              <span className='con'>{comma(Total)}원</span>
             </p>
         </div>
         

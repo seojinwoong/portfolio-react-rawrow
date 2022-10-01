@@ -10,6 +10,7 @@
 #cartPage .cart-product-list-wrap .right-info .delete-cart-p { background: #000; color: #fff; width: 60px; height: 27px; font-size: 15px; cursor: pointer; margin-top: 10px; } 
 #cartPage .no-datas { text-align: center; margin: 50px 0; font-size: 20px; font-weight: bold; } 
 #cartPage .remove-all { padding:0 10px; background: #ff4d3f; color: #fff; height: 36px; font-size: 16px; cursor: pointer; margin-bottom: 17px; display: block; margin-left: auto; margin-top: 21px; } 
+#cartPage .remove-all.disabled {background: grey;}
 #cartPage .calculate-all { margin-top: 50px; font-size: 30px; font-weight: bold; display: flex; justify-content: flex-end; } 
 #cartPage .calculate-all > p { text-align: right; } 
 #cartPage .calculate-all > p.con-box { margin-left: 50px; } 

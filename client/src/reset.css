@@ -139,6 +139,8 @@
  
  .page-content { margin-top:146px; margin-bottom: 50px; height:auto; flex: 1 auto;} 
  
+ .disabled {cursor: not-allowed; pointer-events: none;}
+
  /* 미디어쿼리 */
  @media (max-width: 1024px) { /* 모바일 레이아웃으로 변경지점 */
     html { font-size: 50%; } 

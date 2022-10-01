@@ -108,7 +108,6 @@ function ProductDetailPage(props) {
                 if (response.payload.success) {
                     let isMovePage = window.confirm('장바구니에 담기 완료! 장바구니 페이지로 이동하시겠습니까?');
                     if (isMovePage) navigate('/user/cart');
-                    else window.location.reload();
                 } else {
                     alert('상품을 장바구니에 담는 과정 중에 오류가 발생하였습니다');
                 }
