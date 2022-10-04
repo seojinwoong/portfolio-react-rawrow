@@ -7,7 +7,7 @@
 .footer-wrapper .company-info { float: left; width: 40%; font-size: 14px; } 
 .footer-wrapper .copyright-and-sns { float: left; width: 20%; font-size: 14px; font-weight: bold; } 
 .footer-wrapper .copyright-and-sns .sns-section img { width: 30px; display: inline-block; cursor: pointer; margin-right: 5px; } 
-.footer-wrapper .go-top-btn { transition:all .3s; position: fixed; bottom: 30px; right: 30px; border: 2px solid #111; line-height: 1; width: 36px; height: 36px; text-align: center; line-height: 30px; cursor: pointer; font-size: 20px; } 
+.footer-wrapper .go-top-btn { transition:all .3s; position: fixed; bottom: 30px; right: 30px; border: 2px solid #111; line-height: 1; width: 36px; height: 36px; text-align: center; line-height: 30px; cursor: pointer; font-size: 20px; z-index: 100;} 
 .footer-wrapper .go-top-btn:hover { background:#111; color:#fff; } 
 
 @media (max-width:1100px){

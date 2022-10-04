@@ -5,10 +5,13 @@ import {
     CHECK_ID,
     LOGIN_USER,
     LOGOUT_USER,
+    FIND_MEMBER_INFO,
+    CHANGE_PWD,
     ADD_TO_CART,
     GET_CART_ITEMS,
     REMOVE_CART_ITEM,
-    REMOVE_ALL_CART
+    REMOVE_ALL_CART,
+    ON_SUCCESS_BUY
 } from './types';
 import { USER_SERVER, PRODUCT_SERVER } from '../components/Config';
 
@@ -62,6 +65,26 @@ export function logoutUser(){
     }
 }
 
+export function findMemberInfo(dataToSubmit){
+    const request = axios.post(`${USER_SERVER}/findMemberInfo`, dataToSubmit)
+    .then(response => response.data);
+
+    return {
+        type: FIND_MEMBER_INFO,
+        payload: request
+    }
+}
+
+export function changePwd(dataToSubmit){
+    const request = axios.post(`${USER_SERVER}/changePwd`, dataToSubmit)
+    .then(response => response.data);
+
+    return {
+        type: CHANGE_PWD,
+        payload: request
+    }
+}
+
 export function addToCart(dataToSubmit){
     const request = axios.post(`${USER_SERVER}/addToCart`, dataToSubmit)
     .then(response => response.data);
@@ -94,8 +117,6 @@ export function getCartItems(cartItems, userCart){
 export function removeCartItem(productId){
     const request = axios.get(`${USER_SERVER}/removeFromCart?id=${productId}`)
     .then(response => {
-        // productInfo와 cart 정보를 조합해서 cartDetail을 만든다.
-
         response.data.cart.forEach(item => {
             response.data.productInfo.forEach((product, idx) => {
                 if (item.id === product._id) {
@@ -114,14 +135,20 @@ export function removeCartItem(productId){
 
 export function removeAllCart(){
     const request = axios.get(`${USER_SERVER}/removeAllCart`)
-    .then(response => {
-        // productInfo와 cart 정보를 조합해서 cartDetail을 만든다.
-
-        return response.data;
-    });
+     .then(response => response.data);
 
     return {
         type: REMOVE_ALL_CART,
+        payload: request
+    }
+}
+
+export function onSuccessBuy(data){
+    const request = axios.post(`${USER_SERVER}/successBuy`, data)
+     .then(response => response.data);
+
+    return {
+        type: ON_SUCCESS_BUY,
         payload: request
     }
 }

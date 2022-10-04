@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import './Sections/ShopPage.css';
 import LoadingIcon from "../../utils/LoadingIcon";
+import './Sections/SearchResultPage.css';
 import { Link, useParams } from 'react-router-dom';
 
-function ShopPage(props) {
-  const { pCategory } = useParams();
+// fontawesome Icon
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationTriangle } from "@fortawesome/free-solid-svg-icons";
+
+function SearchResultPage(props) {
+  const { searchText } = useParams();
   const [ProductArray, setProductArray] = useState([]);
   const [Limit, setLimit] = useState(8);
   const [Skip, setSkip] = useState(0);
@@ -14,20 +18,19 @@ function ShopPage(props) {
 
   useEffect(() => {
     let body = {
-        skip: Skip,
-        limit: Limit,
-        category: pCategory
+      skip: Skip,
+      limit: Limit,
+      searchTerm: searchText
     }
-
     getProducts(body);
-  }, [pCategory]);
+  }, [searchText]);
 
   const loadMoreItems = () => {
     let newSkip = Skip + Limit;
     let body = {
       skip: newSkip,
       limit: Limit,
-      category: pCategory,
+      searchTerm: searchText,
       isLoadMore: true
     }
     getProducts(body);
@@ -53,14 +56,16 @@ function ShopPage(props) {
   }
 
   return (
-    <div className="shop-page">
-      <h2 className="page-title shop-title">
-        {pCategory == 1 ? 'BAG' : pCategory == 2 ? 'EYE' : 'WEAR'}
-      </h2>
-      
+    <div className="search-result-page">
+      <h2 className="page-title result-title">검색결과</h2>
+      <h3 className="search-value mb20">검색내용 : {searchText}</h3>
+
       {
         ( PageLoad === false && ProductArray.length == 0 ) &&
-        <p className="no-data">상품이 존재하지 않습니다.</p>       
+        <p className="no-data-wrap">
+          <FontAwesomeIcon icon={faExclamationTriangle} className='notify-ico'/>
+          <span className="no-data">검색결과가 없습니다.</span>       
+        </p>
       }
       <ul className="product-lists-wrap">
           {
@@ -80,7 +85,8 @@ function ShopPage(props) {
               ))
           }
       </ul>
-      {
+     
+       {
         IsNextData &&
         <p className="more-btn-wrap" onClick={loadMoreItems}>더보기</p>
       }
@@ -89,4 +95,4 @@ function ShopPage(props) {
   );
 }
 
-export default ShopPage;
+export default SearchResultPage;

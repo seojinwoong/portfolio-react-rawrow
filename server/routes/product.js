@@ -51,8 +51,17 @@ router.post('/products', (req, res) => {
         .skip(skip)
         .limit(limit)
         .exec((err, productInfo) => {
-            if (err) return res.status(400).json({ success: false, err })
-            return res.status(200).json({ success: true, productInfo, postSize: productInfo.length })
+            if (err) return res.status(400).json({ success: false, err });
+            Product.find({ "title": {'$regex': searchTerm, '$options': 'i'}})
+            .skip(skip + limit).limit(limit)
+            .exec((err, nextData) => {
+                if (err) return res.status(400).json({ success: false, err });
+                return res.status(200).json({
+                    success: true,
+                    productInfo,
+                    isNextDataExist: nextData.length !== 0
+                });
+            })
         })
     } else {
         Product.find({ category: category })
@@ -60,8 +69,17 @@ router.post('/products', (req, res) => {
         .skip(skip)
         .limit(limit)
         .exec((err, productInfo) => {
-            if (err) return res.status(400).json({ success: false, err })
-            return res.status(200).json({ success: true, productInfo, postSize: productInfo.length })
+            if (err) return res.status(400).json({ success: false, err });
+            Product.find({ category: category })
+            .skip(skip + limit).limit(limit)
+            .exec((err, nextData) => {
+                if (err) return res.status(400).json({ success: false, err });
+                return res.status(200).json({
+                    success: true,
+                    productInfo,
+                    isNextDataExist: nextData.length !== 0
+                });
+            });
         })
     }
 });

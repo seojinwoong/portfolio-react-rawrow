@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 import LogoImg from '../../../images/logo.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBag, faSearch, faUser, faShoppingCart, faBars, faTimes, faUserPlus, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingBag, faSearch, faUser, faShoppingCart, faBars, faTimes, faUserPlus, faCreditCard, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Header = memo((props) => {
   const dispatch = useDispatch();
@@ -47,13 +47,16 @@ const Header = memo((props) => {
 
   const keyPressFn = useCallback((e) => { 
     if (e.key === 'Enter') checkSearchValue(); 
-  }, []); // Enter key 눌렀을때 submit 이벤트
+  }, [SearchValue]); // Enter key 눌렀을때 submit 이벤트
 
   const toggleSearchTerm = useCallback(() => {
     setIsSearchTermShow((prev) => !prev);
   }, []);
   const toggleMobileNav = useCallback(() => {
     setIsMobileMenuShow((prev) => !prev);
+  }, []);
+  const mobileNavClose = useCallback(() => {
+    setIsMobileMenuShow(false);
   }, []);
 
   return (
@@ -65,12 +68,12 @@ const Header = memo((props) => {
 
       {/* nav-bar */}
       <div className="nav-bar clearfix">
-        <h1 className="logo" ref={logoRef}><Link to="/"><img src={LogoImg} alt="RAWROW 로고"/></Link></h1>
+        <h1 className="logo" ref={logoRef}><a href="/"><img src={LogoImg} alt="RAWROW 로고"/></a></h1>
         
         <nav className={IsMobileMenuShow ? 'nav-menu active' : 'nav-menu'}>
-          <Link to="/shop/1">BAG</Link>
-          <Link to="/shop/2">EYE</Link>
-          <Link to="/shop/3">WEAR</Link>
+          <Link to="/shop/1" onClick={mobileNavClose}>BAG</Link>
+          <Link to="/shop/2" onClick={mobileNavClose}>EYE</Link>
+          <Link to="/shop/3" onClick={mobileNavClose}>WEAR</Link>
         </nav>
 
           <section className="right-menu">
@@ -88,14 +91,26 @@ const Header = memo((props) => {
                 user.userData && user.userData.isAuth
                 ? ( 
                   <>
-                    <Link className='menu-list' to="/user/cart">
-                      <i>
-                        CART&nbsp;
-                        {user.userData.cart && user.userData.cart.length > 0 && `(${user.userData.cart.length})` }  
-                      </i>
-                      <FontAwesomeIcon icon={faShoppingCart} className="mo-ico"/>
-                      {user.userData.cart && user.userData.cart.length > 0 && <span className="cart-count">{user.userData.cart.length}</span> } 
-                    </Link>
+                    {
+                      !user.userData.isAdmin 
+                      && (
+                        <>
+                          <Link className='menu-list' to="/user/cart">
+                            <i>
+                              CART&nbsp;
+                              {user.userData.cart && user.userData.cart.length > 0 && `(${user.userData.cart.length})` }  
+                            </i>
+                            <FontAwesomeIcon icon={faShoppingCart} className="mo-ico"/>
+                            {user.userData.cart && user.userData.cart.length > 0 && <span className="cart-count">{user.userData.cart.length}</span> } 
+                          </Link>
+                          <Link className='menu-list' to="/user/purchaseHistory">
+                              <i>주문내역</i>
+                              <FontAwesomeIcon icon={faCreditCard} className="mo-ico"/>
+                          </Link>
+                        </>
+                      ) 
+                    }
+                
                     <span className='menu-list' onClick={logoutHandler}>
                       <i>LOGOUT</i>
                       <FontAwesomeIcon icon={faSignOutAlt} className="mo-ico"/>

@@ -1,0 +1,27 @@
+
+.findUserInfoPage { max-width: 600px; } 
+.findUserInfoPage .tab-menu { max-width: 400px; margin: 0 auto; text-align: center; } 
+.findUserInfoPage .tab-menu .tab { display: inline-block; border: 2px solid #111; width: 50%; padding: 1rem 0; font-size: 18px; cursor: pointer; } 
+.findUserInfoPage .tab-menu .active { background: #111; color: #fff; } 
+.findUserInfoPage .find-form .find-way-option { text-align: center; margin: 20px 0; } 
+.findUserInfoPage .find-form .find-way-option input[type='radio'] { margin-right: 5px; width: 15px; height: 15px; cursor: pointer; } 
+.findUserInfoPage .find-form .find-way-option label { vertical-align: 2px; cursor: pointer; font-size: 18px; } 
+.findUserInfoPage .info-input-wrapper { max-width: 400px; margin: 0 auto; } 
+.findUserInfoPage .info-input-wrapper p { font-size: 17px; font-weight: bold; margin-top: 15px; margin-bottom: 5px; } 
+.findUserInfoPage .info-input-wrapper input { border: 2px solid #111; width: 100%; padding: 5px; font-size: 16px; } 
+.findUserInfoPage .info-input-wrapper .phone { border: 2px solid #111; font-size: 16px; width: 100px; min-height: 38px; } 
+.findUserInfoPage .info-input-wrapper .dash { font-size: 26px; margin: 0 5px; } 
+
+.submit-info { background: #111; color: #fff; display: block; margin: 30px auto 0; padding: 5px 20px; font-size: 18px; cursor: pointer; } 
+
+/* 아이디찾기결과페이지 */
+.go-link-wrap { text-align: center; margin: 100px 0; } 
+.go-link-wrap .go-link-page { cursor: pointer; background: #000; color: #fff; margin: 50px auto; display: inline-block; padding: 10px 4rem; font-size: 20px; font-weight: bold; margin: 0 5px; text-decoration: none; } 
+
+@media (max-width: 800px) {
+    .go-link-wrap .go-link-page{font-size:16px;}        
+}
+
+ 
+ 
+ 

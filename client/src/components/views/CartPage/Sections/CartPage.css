@@ -10,12 +10,19 @@
 #cartPage .cart-product-list-wrap .right-info .delete-cart-p { background: #000; color: #fff; width: 60px; height: 27px; font-size: 15px; cursor: pointer; margin-top: 10px; } 
 #cartPage .no-datas { text-align: center; margin: 50px 0; font-size: 20px; font-weight: bold; } 
 #cartPage .remove-all { padding:0 10px; background: #ff4d3f; color: #fff; height: 36px; font-size: 16px; cursor: pointer; margin-bottom: 17px; display: block; margin-left: auto; margin-top: 21px; } 
-#cartPage .remove-all.disabled {background: grey;}
+#cartPage .remove-all.disabled { background: grey; } 
 #cartPage .calculate-all { margin-top: 50px; font-size: 30px; font-weight: bold; display: flex; justify-content: flex-end; } 
 #cartPage .calculate-all > p { text-align: right; } 
 #cartPage .calculate-all > p.con-box { margin-left: 50px; } 
 #cartPage .calculate-all > p > span { display: block; } 
 #cartPage .purchase-btn { width: 200px; font-size: 20px; height: 40px; color: #fff; border: 2px solid #111; background: #000; cursor: pointer; float: right; margin-top: 15px; } 
+#cartPage .paypal-wrapper { margin-top: 50px; display: flex; justify-content: flex-end; } 
+#cartPage .zoid-outlet { transition: unset !important; } 
+#cartPage.purchase-page .purchase-date-tit { color: #ff5000; font-weight: bold; font-size: 30px; margin-bottom: 5px; margin-top: 50px; border-bottom: 3px solid #ff5000; padding-bottom: 5px; letter-spacing: -1px; } 
+#cartPage.purchase-page .cart-product-list-wrap { border-top: none; border-bottom:none; } 
+#cartPage.purchase-page .cart-product-list-wrap .cart-product-list:last-child { border-bottom: 2px solid #111 } 
+#cartPage.purchase-page .cart-product-list-wrap .right-info { justify-content: flex-end; } 
+#cartPage.purchase-page .no-datas { border-top: 2px solid #111; border-bottom: 2px solid #111; padding: 50px 0; } 
 
 @media (max-width: 700px){
  #cartPage .cart-product-list-wrap .cart-p-detail { font-size: 13px; } 
@@ -25,5 +32,8 @@
  #cartPage .remove-all { height: 32px; font-size: 14px; } 
  #cartPage .calculate-all { font-size: 20px; } 
  #cartPage .purchase-btn { width: 150px; height: 35px; font-size: 18px; } 
+ #cartPage .paypal-button { width: 250px; } 
+ #cartPage .zoid-outlet { width: 100% !important; } 
+ #cartPage.purchase-page .purchase-date-tit { font-size: 20px; } 
  }
  

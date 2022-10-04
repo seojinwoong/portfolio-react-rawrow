@@ -3,7 +3,10 @@ const router = express.Router();
 const { auth } = require('../middleware/auth');
 const { User } = require('../models/User');
 const { Product } = require('../models/Product');
+const { Payment } = require('../models/Payment');
 const async = require('async');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 //=================================
 //             User
@@ -41,6 +44,38 @@ router.post('/checkId', (req, res) => {
         if (user) return res.status(200).json({ success: true, result: 'impossible' });
         else return res.status(200).json({ success: true, result: 'possible' })
     });
+});
+
+router.post("/changePwd", (req, res) => {
+  
+  const pwd = req.body.changePwd;
+  bcrypt.hash(pwd, saltRounds, (err, encryptedPW) => {
+    if (err) return res.status(400).json({ success: false, err });
+    User.findOneAndUpdate(
+      { _id: req.body.userKey },
+      { $set: { password: encryptedPW } },
+      { new: false },
+      (err, userInfo) => {
+        if (err) return res.status(400).json({ success: false, err });
+        res.status(200).json({ success: true });
+      }
+    )
+  });
+});
+
+router.post("/findMemberInfo", (req, res) => {
+  let flag = req.body.flag;
+  let info = {};
+  if (flag == 1) info = { email: req.body.inputEmail, name: req.body.inputName }
+  else if (flag == 2) info = { name: req.body.inputName, phone: req.body.inputPhone }
+  else if (flag == 3) info = { userId: req.body.inputId, email: req.body.inputEmail, name: req.body.inputName }
+  else if (flag == 4) info = { userId: req.body.inputId, phone: req.body.inputPhone, name: req.body.inputName }
+  
+  User.findOne(info, (err, user) => {
+    if (err) return res.status(400).json({ success: false, err });
+    if (!user) return res.json({ success: true, findSuccess: false, msg: '일치하는 계정 정보가 없습니다.' })
+    return res.status(200).json({ success: true, findSuccess: true, user, flag })
+  })
 });
 
 router.post("/login", (req, res) => {
@@ -97,7 +132,6 @@ router.post("/addToCart", auth, (req, res) => {
               }
           });
           if (flag) {
-            console.log('itemIdx', itemIdx);
             let inputSizes = req.body.sizes;
             let cartData = userInfo.cart[itemIdx].sizes;
             let newData = [];
@@ -195,6 +229,73 @@ router.get('/removeAllCart', auth, (req, res) => {
 
   // 그 다음, product Collection에서 현재 남아있는 cart 상품들의 정보를 가져오기
 }); 
+
+router.post('/successBuy', auth, (req, res) => {
+  let history = [];
+  let transactionData = {};
+
+  req.body.cartDetail.forEach((item) => {
+    history.push({
+        productThumb: item.images[0],
+        dateOfPurchase: Date.now(),
+        name: item.title,
+        id: item._id,
+        price: item.price,
+        quantity: item.quantity,
+        paymentId: req.body.paymentData.paymentID
+    });
+  });
+
+  transactionData.user = {
+    id: req.user._id,
+    name: req.user.name,
+    email: req.user.email
+  }
+
+  transactionData.data = req.body.paymentData;
+  transactionData.product = history;
+
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $push: { purchaseHistory: history }, $set: { cart: [] } },
+    { new: true },
+    (err, userInfo) => {
+      if (err) return res.json({ success: false, err });
+
+      const payment = new Payment(transactionData);
+      payment.save((err, paymentInfo) => {
+        if (err) return res.json({ success: false, err });
+
+        let products = [];
+        paymentInfo.product.forEach(item => {
+          products.push({ id: item.id, quantity: item.quantity })
+        });
+
+        async.eachSeries(products, (item, callback) => {
+          let totalSold = item.quantity.reduce((a, b) => a + b.amount, 0);
+
+          Product.update(
+            { _id: item.id },
+            {
+              $inc: {
+                "sold": totalSold
+              }
+            },
+            { new: false },
+            callback
+          )
+        }, (err) => {
+          if (err) return res.status(400).json({ success: false, err });
+          res.status(200).json({
+            success: true,
+            cart: userInfo.cart,
+            cartDetail: []
+          })
+        })
+      })
+    }
+  )
+});
 
 
 module.exports = router;
