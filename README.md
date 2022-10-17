@@ -75,7 +75,8 @@
   #### 3. 상품구매 기능
   Paypal 결제모듈을 이용하여 결제기능을 구현해보았습니다. 
   
-  
+  ![ezgif com-gif-maker](https://user-images.githubusercontent.com/42455534/196254704-b02765a6-1fc5-47de-b87f-b32eab8774c4.gif)
+
 
   
   
