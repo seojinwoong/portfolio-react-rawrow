@@ -12,6 +12,7 @@
 ![express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
 ![mongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
 ![CSS](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)
+![paypal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)
 
 
 ## 구조 요약
@@ -68,6 +69,12 @@
   
   #### 2. 상품업로드 기능
   관리자정보로 로그인을 하면 상품업로드 페이지에 접근할 수 있습니다. 상품사진, 상품 가격, 사이즈정보 등을 입력하면 DB에 저장되어 목록들을 확인할 수 있습니다.
+  
+  ![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/42455534/196253389-53461e4e-f794-424f-9209-ff575503b863.gif)
+  
+  #### 3. 상품구매 기능
+  Paypal 결제모듈을 이용하여 결제기능을 구현해보았습니다. 
+  
   
 
   
