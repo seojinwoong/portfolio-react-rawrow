@@ -1,35 +1,69 @@
 # 리액트를 활용한 쇼핑몰 프로젝트
 #### 리액트를 중심으로, 프론트와 백엔드 모두 작업을 해본 쇼핑몰 프로젝트입니다.
-[프로젝트 보러가기](http://portfolio-react-netflix.s3-website.ap-northeast-2.amazonaws.com/)
+[프로젝트 보러가기](https://stormy-hamlet-84446.herokuapp.com/)
 
-![netflixmovie](https://user-images.githubusercontent.com/42455534/196230938-b4fd85c8-c6ad-4302-a816-01d525096a61.gif)
+![rawrowmovie](https://user-images.githubusercontent.com/42455534/196243737-84ef11df-f09e-4ff0-bf93-1c4129b36a00.gif)
 
 ## 사용한 기술스택
 ![JAVASCRIPT](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
 ![REACT](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![styled-components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
-![SCSS](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)
+![REDUX](	https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white)
+![node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
+![mongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)
+
 
 ## 구조 요약
   #### 🔳 Component
   
-    • MainPage.js => 메인페이지. 최신영화정보와 장르별로 영화리스트 swiper로 구성.
-    • SearchPage.js => 영화검색페이지. 검색어와 매칭되는 영화정보 리스트로 보여주는 페이지
-    • MovieModal.js => 영화상세정보모달 컴포넌트. 
+    • MainPage.js => 메인페이지.
+    
+    • SignUpPage.js => 회원가입페이지.
+    
+    • LoginPage.js => 로그인페이지.
+    
+    • FindUserInfoPage.js => 아이디/비밀번호 찾기페이지.
+    
+    • SearchResultPage.js => 상품검색결과 페이지.
+    
+    • ProductUploadPage.js => 상품업로드페이지. 관리자 계정으로만 접근가능한 페이지이며 상품사진과 상세정보를 입력하고 저장하면 실제 상품목록페이지에 반영이 됩니다. 
+      
+    • ShopPage.js => 상품목록페이지. 업로드한 상품목록이 나오는 부분입니다.
+    
+    • ProductDetailPage.js => 상품상세정보페이지. 업로드한 상품 상세정보가 나오는 부분입니다.
+    
+    • CartPage.js => 장바구니페이지. 장바구니에 담은 상품목록이 나오는 부분입니다. 삭제 또는 구매까지 할 수 있습니다.           
+    
+    • PurchaseHistoryPage.js => 상품구매내역페이지. 구매한 상품의 히스토리가 나옵니다.
+    
+    • auth.js => 로그인 여부, 유저권한을 체크하는 인증관련 hoc(higher-order component).
+    
+    • NotFoundPage.js => 404페이지.
+    
   
-  #### 🔳 custom hook
+  #### 🔳 redux
   
-    • useDebounce.js => 영화검색 기능 중 debounce방식을 custom hook으로 구성하여 작성했습니다.
+    • _reducers/user_reducer.js => 회원과 관련된 reducer 함수들을 정리한 파일입니다.
+    
+    • _actions/user_actions.js => 회원과 관련된 action 함수들을 정리한 파일입니다.
+    • _actions/types.js => action의 타입명을 상수로 관리하는 파일입니다.
+    
+ #### 🔳 backend(server 폴더)
+  
+    • models => DB의 schema를 정의한 폴더입니다.
+      (회원정보: User.js / 상품정보: Product.js / 결제정보: Payment.js)
+    • routes => api 기능을 정의한 폴더입니다.
+    
+     
+    
  
  ## 기능 소개
-  #### 1. useDebounce 방식을 이용하여 불필요한 API 요청 방지하기.
-  상단 네비게이션 바에 영화 검색 INPUT창이 있습니다. input onChange이벤트를 할 때마다 API요청을 
-  하게 되는데, 
-  사용자가 검색어를 계속 입력하는 과정 중에는 굳이 API요청을 보낼 필요가 없습니다.
+  #### 1. 회원의 페이지접근권한을 파악하는 hoc 컴포넌트
+  페이지의 성격에 따라 회원만 접근가능한 페이지, 혹은 관리자만 접근가능한 페이지가 있습니다.
+  로그인 여부, 유저권한 등을 체크하는 hoc컴포넌트를 만들어서 모든 페이지의 인증을 체크하도록 했습니다. 
   
-  특정시간이 지난 후 하나의 이벤트만 실행하는 debounce방식을 활용하였고 이 방식을 custom hook으로 작성하였습니다.
-  
-  ![ezgif com-gif-maker](https://user-images.githubusercontent.com/42455534/196237876-ec9ffa3d-9410-4e5b-b00d-a4332327e5e2.gif)
+ 
   
   
   #### 2. 스켈레톤 UI와 lazy loading
